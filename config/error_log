@@ -1,0 +1,436 @@
+[26-Jan-2026 19:49:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[26-Jan-2026 19:49:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[26-Jan-2026 19:49:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[26-Jan-2026 19:49:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[26-Jan-2026 19:51:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[26-Jan-2026 21:52:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[26-Jan-2026 21:52:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[26-Jan-2026 21:52:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[26-Jan-2026 21:52:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[26-Jan-2026 21:54:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[26-Jan-2026 21:58:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[26-Jan-2026 21:58:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[26-Jan-2026 21:58:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[26-Jan-2026 21:58:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[26-Jan-2026 21:58:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/logging.php on line 21
+[28-Jan-2026 07:09:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[28-Jan-2026 07:09:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[28-Jan-2026 07:09:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[28-Jan-2026 07:09:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[28-Jan-2026 07:09:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[28-Jan-2026 07:09:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[28-Jan-2026 07:09:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[28-Jan-2026 07:09:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[29-Jan-2026 09:17:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[29-Jan-2026 09:17:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[29-Jan-2026 09:17:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[29-Jan-2026 09:17:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[29-Jan-2026 09:19:04 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[29-Jan-2026 09:23:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[29-Jan-2026 09:23:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[29-Jan-2026 09:23:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[29-Jan-2026 09:23:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[29-Jan-2026 09:23:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/logging.php on line 21
+[03-Feb-2026 02:35:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[04-Feb-2026 15:23:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[04-Feb-2026 17:21:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[04-Feb-2026 17:21:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[04-Feb-2026 17:21:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[04-Feb-2026 17:21:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[04-Feb-2026 17:23:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[05-Feb-2026 05:08:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[05-Feb-2026 05:08:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[05-Feb-2026 05:08:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[05-Feb-2026 05:08:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[05-Feb-2026 05:09:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[05-Feb-2026 05:13:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[05-Feb-2026 05:13:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[05-Feb-2026 05:13:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[05-Feb-2026 05:13:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[05-Feb-2026 05:13:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/logging.php on line 21
+[13-Feb-2026 00:43:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[13-Feb-2026 00:43:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[13-Feb-2026 00:55:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[13-Feb-2026 00:55:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[17-Feb-2026 15:03:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[17-Feb-2026 15:03:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[17-Feb-2026 15:03:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[17-Feb-2026 15:03:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[17-Feb-2026 15:04:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[17-Feb-2026 15:04:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[17-Feb-2026 15:04:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[17-Feb-2026 15:04:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[17-Feb-2026 15:04:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[17-Feb-2026 15:04:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[17-Feb-2026 15:04:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[17-Feb-2026 15:04:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[17-Feb-2026 15:04:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[17-Feb-2026 15:04:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[17-Feb-2026 15:04:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[17-Feb-2026 15:04:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[17-Feb-2026 15:04:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[17-Feb-2026 15:04:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[22-Feb-2026 07:19:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[22-Feb-2026 07:19:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[22-Feb-2026 07:19:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[22-Feb-2026 07:19:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[22-Feb-2026 07:21:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[22-Feb-2026 07:26:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[22-Feb-2026 07:26:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[22-Feb-2026 07:26:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[22-Feb-2026 07:26:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[22-Feb-2026 07:26:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/logging.php on line 21
+[12-Mar-2026 00:23:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[12-Mar-2026 00:23:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[12-Mar-2026 00:23:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[12-Mar-2026 00:23:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[12-Mar-2026 00:24:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[12-Mar-2026 00:29:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[12-Mar-2026 00:29:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[12-Mar-2026 00:29:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[12-Mar-2026 00:29:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[12-Mar-2026 00:29:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/logging.php on line 21
+[08-Apr-2026 22:11:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[08-Apr-2026 22:11:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[12-Apr-2026 07:02:33 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[12-Apr-2026 07:02:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[12-Apr-2026 07:03:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[12-Apr-2026 07:03:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[12-Apr-2026 07:03:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[19-Apr-2026 22:04:50 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/database.php on line 19
+[19-Apr-2026 22:04:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/mail.php on line 17
+[19-Apr-2026 22:04:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/app.php on line 16
+[19-Apr-2026 22:05:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/services.php on line 18
+[19-Apr-2026 22:16:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/cache.php on line 18
+[19-Apr-2026 22:24:52 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/auth.php on line 17
+[19-Apr-2026 22:24:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/filesystems.php on line 16
+[19-Apr-2026 22:24:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/queue.php on line 16
+[19-Apr-2026 22:24:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/session.php on line 21
+[19-Apr-2026 22:24:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/pwan5124/public_html/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/config/logging.php on line 21

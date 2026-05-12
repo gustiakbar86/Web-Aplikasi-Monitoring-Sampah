@@ -1,0 +1,102 @@
+.app-header {
+    background-color: #1e3f8c !important;
+}
+
+.app-header small {
+    font-size: 12px;
+}
+
+.time-display {
+    font-size: 14px;
+    color: #333;
+}
+
+.app-navbar .d-flex {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.btn-light {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.btn-light:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.dropdown-menu {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 8px 0;
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item.active {
+    background-color: #1e3f8c;
+    color: white;
+}
+
+.btn {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+}
+
+.app-navbar .btn {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+}
+
+.btn-primary {
+    background-color: #1e3f8c;
+    border-color: #1e3f8c;
+}
+
+.btn-primary:hover {
+    background-color: #163070;
+    border-color: #163070;
+}
+
+.nav-item .btn {
+    text-align: left;
+    width: 100%;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .app-header .row > div {
+        text-align: center;
+    }
+    
+    .app-header .d-flex {
+        justify-content: center !important;
+        margin-top: 10px;
+    }
+    
+    .app-navbar .d-flex {
+        flex-direction: column;
+    }
+    
+    .app-navbar .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .dropdown-menu {
+        width: 100%;
+    }
+}

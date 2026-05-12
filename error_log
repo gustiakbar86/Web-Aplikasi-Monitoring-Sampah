@@ -1,0 +1,165 @@
+[31-Dec-2025 10:51:28 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/pwan5124/public_html/index.php on line 34
+[31-Dec-2025 10:51:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[31-Dec-2025 11:02:21 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/pwan5124/public_html/index.php on line 34
+[31-Dec-2025 11:02:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[31-Dec-2025 11:15:28 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/pwan5124/public_html/index.php on line 34
+[31-Dec-2025 11:15:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:31 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:34 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:35 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:39 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:51 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:52 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:52 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:55 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:55 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:56 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:56 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:57 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:04:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:05:25 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:05:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:05:34 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:05:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:05:35 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:05:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:06 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:24 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:37 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:46 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:07:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:17 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:11:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:12:22 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:12:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:12:23 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:12:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:12:24 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:12:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:17:35 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:17:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:20:38 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:20:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:20:39 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:20:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:20:39 Asia/Jakarta] PHP Warning:  require(/home/pwan5124/public_html/vendor/autoload.php): Failed to open stream: Permission denied in /home/pwan5124/public_html/index.php on line 34
+[24-Apr-2026 11:20:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/pwan5124/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pwan5124/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/index.php on line 34

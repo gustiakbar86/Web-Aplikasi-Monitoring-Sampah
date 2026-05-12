@@ -1,0 +1,8 @@
+[28-Jan-2026 07:09:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/pwan5124/public_html/routes/api.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/routes/api.php on line 20
+[28-Jan-2026 07:09:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/pwan5124/public_html/routes/web.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/pwan5124/public_html/routes/web.php on line 20

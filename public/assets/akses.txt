@@ -1,0 +1,1303 @@
+Siap, saya mengerti alur kerjanya. Pendekatan Template-Based Export (Inject Data ke Template) yang Anda ajukan ini adalah solusi terbaik dan paling "aman" untuk laporan formal seperti Neraca Limbah.
+
+Keuntungan utamanya adalah kita tidak perlu pusing mendesain garis/warna/logo lewat kodingan (yang sangat ribet), kita cukup fokus menaruh angka di sel yang tepat.
+
+Silakan unggah (upload) kedua file tersebut sekarang:
+
+File Database (.sql): Agar saya tahu nama tabel, kolom, dan relasi antara sampah dengan "instansi" (lokasi).
+
+File Excel Template (.xlsx): Agar saya bisa melihat posisi sel (Cell Coordinate) dan nama Sheet-nya.
+
+Setelah Anda kirimkan, saya akan langsung menganalisa:
+
+Mapping Data: Kolom database mana masuk ke Sel Excel nomor berapa.
+
+Logika Filter Instansi: Bagaimana query SQL harus berubah ketika user memilih "Semua" vs "Beberapa Instansi".
+
+Teknis Koding: Saya akan buatkan kode Laravel menggunakan library PhpSpreadsheet (engine di balik Laravel Excel) untuk me-load template dan mengisinya.
+
+Silakan kirimkan filenya, saya siap menganalisa.
+nah ini isi filenya untuk file sql dan xlsx, silahkan baca dan analisa file ini, lalu untuk langkah selanjutnya bagian export lalukan bagaimana alurnya dan apa yang perlu ditambahkan di excel.
+Terima kasih telah mengunggah file-filenya. Analisis ini menjadi sangat jelas sekarang.
+
+Berdasarkan file pwaste.sql (Database) dan file-file CSV (Representasi Sheet Excel), berikut adalah Analisis Teknis dan Rancangan Alur Export menggunakan metode Template Injection agar hasilnya 100% presisi.
+
+1. Analisis Database (pwaste.sql)
+Untuk melakukan filter berdasarkan "Instansi", kita harus melihat relasi tabelnya.
+
+Tabel Transaksi: sampah_terkelolas dan sampah_diserahkans.
+
+Relasi: Kedua tabel ini memiliki kolom id_user.
+
+Tabel User: Tabel users memiliki kolom id_instansi.
+
+Kesimpulan: Data sampah TIDAK memiliki kolom id_instansi secara langsung.
+
+Logika Query: Untuk memfilter sampah berdasarkan instansi, kita harus melakukan JOIN ke tabel users.
+
+Query Logic (Bayangan Kode):
+
+SQL
+
+SELECT * FROM sampah_terkelolas 
+JOIN users ON sampah_terkelolas.id_user = users.id 
+WHERE users.id_instansi IN [daftar_id_instansi_yang_dipilih_checkbox]
+2. Analisis Struktur Excel & Mapping
+Excel Anda terdiri dari 4 jenis Sheet yang memiliki logika pengisian berbeda:
+
+A. Sheet Harian (Juli - Juni) - Paling Kompleks
+
+Struktur: Baris adalah Tanggal (1-31). Kolom dikelompokkan berdasarkan Lokasi (Area Kantor, Area Parkir, dst), lalu dipecah lagi menjadi Jenis (Organik, Anorganik, Residu).
+
+Tantangan: Koordinat sel statis. Misalnya, untuk tanggal 1, Area Kantor-Organik mungkin ada di sel C8. Tanggal 2 ada di C9.
+
+Strategi: Kita butuh "Peta Koordinat" di kodingan.
+
+B. Sheet Rekap area
+
+Struktur: Baris adalah Bulan. Kolom sama seperti sheet harian (Per Lokasi -> Per Jenis).
+
+Strategi: Menggunakan query SUM per bulan, lalu ditembak ke sel baris bulan tersebut.
+
+C. Sheet Rekap Sampah terkelola
+
+Struktur: Ringkasan total per bulan tanpa memandang lokasi, hanya jenis.
+
+Strategi: Query agregat sederhana per bulan.
+
+D. Sheet Rekap Neraca...
+
+Struktur: Ringkasan total tahunan per lokasi.
+
+Strategi: Query agregat total setahun GROUP BY lokasi.
+
+3. Langkah Implementasi Selanjutnya (Action Plan)
+Berikut adalah tahapan teknis yang harus Anda lakukan untuk fitur Export ini:
+
+Langkah 1: Persiapan File Template (Manual di Excel)
+Anda tidak perlu membuat Excel lewat koding. Anda harus menyiapkan file "Master".
+
+Buka file Excel asli HSSE (2025 Log Book...xlsx).
+
+Hapus semua angka data (biarkan kosong).
+
+JANGAN HAPUS RUMUS/FORMULA. Biarkan rumus SUM, Rata-rata, atau total bawah tetap ada. Biarkan Excel yang menghitung totalnya, kodingan kita hanya mengisi data mentahnya.
+
+Simpan file ini di folder Laravel: storage/app/public/templates/template_master.xlsx.
+
+Langkah 2: Menyiapkan Route & Controller
+Kita butuh endpoint untuk memproses form checkbox instansi.
+
+Route:
+
+PHP
+
+Route::post('/export-final', [LaporanController::class, 'exportFinal'])->name('laporan.exportFinal');
+Langkah 3: Logika Koding (Backend Laravel)
+Saya akan buatkan kerangka logika kodingnya menggunakan phpoffice/phpspreadsheet (pastikan sudah install: composer require phpoffice/phpspreadsheet).
+
+Ini adalah Logic Controller yang harus Anda adaptasi:
+
+PHP
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Models\SampahTerkelola;
+use App\Models\SampahDiserahkan;
+use Carbon\Carbon;
+
+public function exportFinal(Request $request)
+{
+    // 1. Ambil Input dari Form
+    $tahun = $request->input('tahun'); // Misal: 2024
+    $instansiIds = $request->input('instansi_ids'); // Array: [1, 3, 5] (Sesuai checkbox)
+    
+    // 2. Load Template Master
+    $templatePath = storage_path('app/public/templates/template_master.xlsx');
+    $spreadsheet = IOFactory::load($templatePath);
+
+    // ==========================================
+    // BAGIAN 1: MENGISI SHEET HARIAN (JULI - JUNI)
+    // ==========================================
+    
+    // Mapping Nama Bulan ke Nama Sheet (Sesuaikan dengan nama sheet di Excel)
+    $months = [
+        7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni'
+    ];
+
+    foreach ($months as $monthNum => $sheetName) {
+        $sheet = $spreadsheet->getSheetByName($sheetName);
+        
+        // Tentukan tahun (Juli-Des = Tahun T, Jan-Juni = Tahun T+1)
+        $currentYear = ($monthNum >= 7) ? $tahun : $tahun + 1;
+        
+        // Query Data Harian Filter Instansi
+        $dataHarian = SampahTerkelola::whereYear('tanggal', $currentYear)
+            ->whereMonth('tanggal', $monthNum)
+            ->whereHas('user', function($q) use ($instansiIds) {
+                $q->whereIn('id_instansi', $instansiIds);
+            })
+            ->get();
+
+        // LOGIKA MAPPING CELL (Ini yang paling PR)
+        // Anda harus tahu baris awal tanggal 1 di Excel itu baris ke berapa.
+        // Misal: Tanggal 1 ada di Baris 10.
+        $startRow = 10; 
+
+        foreach ($dataHarian as $data) {
+            $day = Carbon::parse($data->tanggal)->day;
+            $row = $startRow + ($day - 1); // Jika tgl 1 = baris 10, maka tgl 2 = baris 11
+
+            // Tentukan Kolom berdasarkan Lokasi & Jenis
+            // Contoh Logic (Anda harus cek Excel aslinya kolom ke berapa hurufnya):
+            // Area Kantor (Lokasi ID 1) -> Organik (Jenis ID 1) -> Kolom C
+            // Area Kantor (Lokasi ID 1) -> Anorganik (Jenis ID 2) -> Kolom D
+            
+            $col = null;
+            if ($data->id_lokasi == 1) { // Area Kantor
+                if ($data->id_jenis == 1) $col = 'C';
+                if ($data->id_jenis == 2) $col = 'D';
+                if ($data->id_jenis == 3) $col = 'E';
+            } elseif ($data->id_lokasi == 2) { // Area Parkir
+                if ($data->id_jenis == 1) $col = 'G'; // Misal kolom G
+                // ... dst
+            }
+
+            if ($col) {
+                // Penjumlahan (Jika ada 2 user input di hari sama, lokasi sama)
+                $currentVal = $sheet->getCell($col . $row)->getValue();
+                $sheet->setCellValue($col . $row, $currentVal + $data->jumlah_berat);
+            }
+        }
+        
+        // Lakukan hal yang sama untuk SampahDiserahkan...
+    }
+
+    // ==========================================
+    // BAGIAN 2: MENGISI REKAP (Opsional jika Excel sudah pakai Rumus)
+    // ==========================================
+    // Jika Sheet Rekap di Excel sudah pakai rumus =SUM('Juli'!C10:C40),
+    // MAKA ANDA TIDAK PERLU KODING BAGIAN INI! 
+    // Biarkan Excel menghitung otomatis dari data harian yang sudah kita inject di atas.
+    // Ini keuntungan besar metode Template Injection.
+
+    // 3. Download File
+    $writer = new Xlsx($spreadsheet);
+    $fileName = 'Laporan_Neraca_' . time() . '.xlsx';
+    
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment; filename="'. $fileName .'"');
+    $writer->save('php://output');
+    exit;
+}
+4. Apa yang perlu ditambahkan di Excel?
+Agar kodingan Anda lebih ringan, lakukan ini pada file template_master.xlsx:
+
+Pastikan Rumus Rekap Terhubung: Cek Sheet Rekap Neraca dan Rekap Area. Pastikan sel-selnya berisi rumus Excel yang mengambil data dari sheet harian.
+
+Contoh: Di Sheet Rekap area sel C5 (Juli-Kantor-Organik), pastikan rumusnya =SUM('Juli'!C10:C40) (misalnya).
+
+Kenapa? Jika rumusnya sudah ada, Anda HANYA perlu mengisi Sheet Harian (Juli-Juni) lewat koding. Sheet Rekap akan terisi otomatis saat file dibuka. Ini menghemat 70% pekerjaan koding!
+
+Standarisasi Baris: Pastikan di setiap Sheet Bulan (Juli s.d Juni), Tanggal 1 selalu mulai di baris yang sama (misal Baris 10). Jika beda-beda, kodingan Anda akan rumit karena harus if else per bulan.
+
+Kesimpulan Alur: User Pilih Filter -> Controller Load Template -> Controller Query DB -> Controller Inject Data ke Sheet Harian -> Controller Return File -> User Buka File -> Excel Menghitung Rumus Rekap -> Selesai.
+nah untuk file excelnya bagaimana? data apa yang dihapus? apakah data rekap dari juli ke juni yang isinya. ini file pdf tersebut adalah salah satu contoh saja, bagian mana yang akan kita hapus di rekap bulanan ini? oh ya karena yang hanya bisa dihapus adalah isi data harian dan untuk yang ada sum dll ngak bisa di edit jadi apakah hanya pada data pengisian harian tersebut yang dihapus? dan lalu untuk menambahkan agar dibawah bagian hijau yang saya coret tersebut di sheet Rekap Neraca Pengelolaan Sampah diisi Nama Instansi Berdasarkan Instansi yang dipilih bagaimana caranya?
+Ini adalah panduan teknis yang sangat spesifik untuk menyiapkan File Template Excel dan Logika Coding untuk Nama Instansi.
+
+1. Apa yang Harus Dihapus di File Excel? (PENTING)
+Prinsip utamanya adalah: "Hapus Input, Jangan Hapus Rumus."
+
+Anda harus membersihkan file Excel tersebut secara manual terlebih dahulu sebelum menyimpannya sebagai template_master.xlsx.
+
+A. Sheet Bulanan (Juli, Agustus, ... s.d Juni)
+
+Apa yang DIHAPUS: Hanya angka-angka data harian yang ada di tengah tabel (mulai dari Tanggal 1 s.d 31).
+
+Apa yang JANGAN DIHAPUS:
+
+Header (Judul Kolom: Organik, Anorganik, dll).
+
+Kolom Tanggal (Angka 1, 2, 3... di kiri).
+
+Baris "Total" atau "Rata-rata" di bagian paling bawah jika itu pakai Rumus Excel (=SUM(...)). Biarkan saja, nanti dia akan menghitung sendiri angka 0 kalau datanya kosong.
+
+B. Sheet "Rekap Neraca...", "Rekap Area", dll
+
+JANGAN HAPUS APAPUN.
+
+Biarkan sheet ini berisi angka-angka "bekas" atau "error" (#REF! atau 0).
+
+Kenapa? Karena isi sel di sheet ini adalah RUMUS (contoh: ='Juli'!C40). Jika Anda hapus selnya, rumusnya hilang. Biarkan saja. Nanti saat program kita mengisi angka di Sheet Juli, angka di Sheet Rekap akan otomatis berubah sendiri menjadi benar.
+
+2. Cara Menambahkan "Nama Instansi" di Bawah Judul
+Di file PDF yang Anda kirim, terlihat ada Header "Perusahaan : PT PELINDO...". Anda ingin menambahkan keterangan Instansi di bawahnya atau mengubahnya sesuai filter yang dipilih.
+
+Langkah 1: Siapkan Tempat di Excel
+
+Buka Sheet Rekap Neraca Pengelolaan Sampah.
+
+Lihat baris Header (misalnya Baris 3 atau 4, di bawah tulisan PT PELINDO).
+
+Kosongkan satu sel yang lebar (misalnya sel B3 atau C3) untuk tempat kita menaruh teks via koding.
+
+Lakukan hal yang sama di Sheet Rekap Area dan Sheet Harian jika perlu.
+
+Langkah 2: Logika Coding (Controller)
+
+Di dalam function exportFinal yang kita rancang sebelumnya, tambahkan logika untuk menyusun "Kalimat Judul" berdasarkan pilihan user, lalu tembak ke sel Excel tersebut.
+
+Berikut potongan kodenya:
+
+PHP
+
+// ... (Bagian Load Template di atas) ...
+
+// 1. LOGIKA PENAMAAN INSTANSI
+// Ambil nama-nama instansi dari Database berdasarkan ID yang dipilih checkbox
+$namaInstansiList = \App\Models\User::whereIn('id_instansi', $instansiIds)
+                    ->pluck('nama_instansi') // Ambil kolom nama saja
+                    ->toArray();
+
+$judulInstansi = "";
+
+// Cek Logika:
+if (count($namaInstansiList) == 1) {
+    // Jika cuma pilih 1 (misal: "Terminal Petikemas")
+    $judulInstansi = "Area: " . strtoupper($namaInstansiList[0]);
+} elseif (count($namaInstansiList) > 1 && count($namaInstansiList) < 5) {
+    // Jika pilih 2-4 instansi, sebutkan namanya
+    $judulInstansi = "Area: " . implode(", ", $namaInstansiList);
+} else {
+    // Jika pilih BANYAK atau SEMUA (lebih dari 5), pakai nama umum biar tidak kepanjangan
+    $judulInstansi = "Area: SELURUH WILAYAH OPERASIONAL"; 
+}
+
+// 2. TEMBAK KE EXCEL (SHEET REKAP NERACA)
+$sheetRekap = $spreadsheet->getSheetByName('Rekap Neraca Pengelolaan Sampah');
+
+// Misal posisi judul ada di Sel 'C3' (Sesuaikan dengan Excel aslimu)
+$sheetRekap->setCellValue('C3', $judulInstansi); 
+
+// Opsional: Tembak juga ke Sheet Rekap Area
+$spreadsheet->getSheetByName('Rekap area')->setCellValue('C3', $judulInstansi);
+
+// ... (Lanjut ke Logic pengisian data harian) ...
+Rangkuman Alur Kerja Anda Sekarang:
+Buka Excel Asli: Hapus angka input harian (Juli-Juni). Jangan sentuh Sheet Rekap. Simpan sebagai template_master.xlsx.
+
+Upload ke Laravel: Masukkan file itu ke storage/app/public/templates/.
+
+Tulis Kode: Copy logika PHP di atas ke Controller Anda.
+
+Test: Coba pilih 1 Instansi -> Export. Cek apakah di Excel hasilnya tertulis nama instansi tersebut.
+
+Apakah penjelasan ini cukup jelas untuk dieksekusi?
+4. Apa yang perlu ditambahkan di Excel?
+
+Agar kodingan Anda lebih ringan, lakukan ini pada file template_master.xlsx:
+
+
+
+Pastikan Rumus Rekap Terhubung:
+
+Cek Sheet Rekap Neraca dan Rekap Area. Pastikan sel-selnya berisi rumus Excel yang mengambil data dari sheet harian.
+
+Contoh: Di Sheet Rekap area sel C5 (Juli-Kantor-Organik), pastikan rumusnya =SUM('Juli'!C10:C40) (misalnya).
+
+Kenapa? Jika rumusnya sudah ada, Anda HANYA perlu mengisi Sheet Harian (Juli-Juni) lewat koding. Sheet Rekap akan terisi otomatis saat file dibuka. Ini menghemat 70% pekerjaan koding!
+
+Standarisasi Baris:
+
+Pastikan di setiap Sheet Bulan (Juli s.d Juni), Tanggal 1 selalu mulai di baris yang sama (misal Baris 10). Jika beda-beda, kodingan Anda akan rumit karena harus if else per bulan.
+
+logika ini ngak saya pakai mungkin agak susah karena ini cukup rumit, jadi pakai cara yang ada aja ya? jadi lalu bagaimana alurnya, berikan ulang ya.
+Baik, saya mengerti. Anda memilih pendekatan "Full Coding".
+
+Artinya:
+
+Excel Template: Hanya berisi Desain (Header, Warna, Logo, Garis). Kosong melompong, tanpa rumus sama sekali.
+
+Tugas Koding (Laravel): Program Anda yang harus bekerja keras. Program harus mengisi Sheet Harian DAN menghitung sendiri totalnya untuk mengisi Sheet Rekap (Area/Neraca).
+
+Ini adalah alur logikanya yang paling aman agar data pasti sinkron (Total di Harian pasti sama dengan Total di Rekap).
+
+1. Persiapan File Excel (Template)
+Lakukan ini pada file Excel Anda (template_master.xlsx):
+
+Hapus Data: Hapus semua angka di Sheet Harian (Juli-Juni).
+
+Hapus Data Rekap: Hapus semua angka di Sheet Rekap Area, Rekap Neraca, Rekap Sampah Terkelola.
+
+Biarkan Kosong: Jangan isi rumus =SUM(...). Biarkan sel-sel tersebut kosong.
+
+Simpan: Save as template_master.xlsx dan taruh di folder storage Laravel.
+
+2. Alur Logika Program (Algorithm)
+Karena kita tidak pakai rumus Excel, kita harus menggunakan teknik "Running Total" (Penjumlahan Berjalan) di dalam kodingan PHP.
+
+Logikanya: Saat kita meloop data harian untuk mengisi Sheet Bulan (misal Juli), kita sekalian "menabung" (menjumlahkan) angkanya ke dalam variabel PHP. Setelah selesai loop bulan itu, tabungan angka tadi kita tulis ke Sheet Rekap.
+
+Langkah-Langkah Koding:
+Load Template: Buka file Excel kosong.
+
+Loop 12 Bulan (Juli s.d Juni):
+
+Query Database: Ambil data sampah di bulan tersebut (filter instansi & tahun).
+
+Loop Data Harian:
+
+Tulis angka berat ke Sheet Harian (misal sel C10).
+
+HITUNG TOTAL (Coding): Tambahkan angka berat ke variabel total_bulanan.
+
+Tulis ke Rekap Area: Ambil total_bulanan tadi, tulis ke Sheet Rekap Area di baris bulan Juli.
+
+Tulis ke Rekap Terkelola: Tulis juga ke Sheet Rekap Sampah Terkelola.
+
+Tabung untuk Tahunan: Tambahkan total_bulanan ke variabel total_tahunan.
+
+Tulis Rekap Tahunan: Setelah selesai 12 bulan, tulis total_tahunan ke Sheet Rekap Neraca.
+
+Download: Berikan file ke user.
+
+3. Contoh Implementasi Kode (Controller)
+Ini adalah kerangka kodenya. Fokus pada bagian // HITUNG TOTAL MANUAL di dalam loop.
+
+PHP
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+public function exportFinal(Request $request)
+{
+    // 1. SETUP
+    $tahun = $request->input('tahun');
+    $instansiIds = $request->input('instansi_ids');
+    
+    $templatePath = storage_path('app/public/templates/template_master.xlsx');
+    $spreadsheet = IOFactory::load($templatePath);
+
+    // Variabel untuk menampung Total Setahun (Untuk Sheet Rekap Neraca)
+    // Struktur: [IdLokasi][IdJenis] => TotalBerat
+    $grandTotal = []; 
+
+    // Daftar Bulan & Sheet-nya
+    $months = [
+        7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni'
+    ];
+
+    // Posisi Baris Awal di Sheet Rekap Area (Misal Juli itu baris ke-10)
+    $rekapAreaRow = 10; 
+
+    // 2. LOOP PER BULAN
+    foreach ($months as $monthNum => $sheetName) {
+        
+        $currentYear = ($monthNum >= 7) ? $tahun : $tahun + 1;
+        $sheetHarian = $spreadsheet->getSheetByName($sheetName);
+        $sheetRekapArea = $spreadsheet->getSheetByName('Rekap area'); // Load sheet rekap
+
+        // Variabel Total Per Bulan ini
+        $totalBulanIni = []; // [IdLokasi][IdJenis] => TotalBerat
+
+        // --- A. ISI SHEET HARIAN ---
+        $dataSampah = \App\Models\SampahTerkelola::whereYear('tanggal', $currentYear)
+            ->whereMonth('tanggal', $monthNum)
+            ->whereHas('user', fn($q) => $q->whereIn('id_instansi', $instansiIds))
+            ->get();
+
+        foreach ($dataSampah as $row) {
+            // 1. Tentukan Koordinat Sheet Harian
+            $tgl = (int)date('d', strtotime($row->tanggal));
+            $barisExcel = 9 + $tgl; // Asumsi tgl 1 = baris 10 (maka 9+1)
+            $kolomExcel = $this->getKolomExcel($row->id_lokasi, $row->id_jenis); // Fungsi bikin sendiri
+            
+            if ($kolomExcel) {
+                // Tulis ke Sheet Harian
+                $cell = $kolomExcel . $barisExcel;
+                $valLama = $sheetHarian->getCell($cell)->getValue();
+                $sheetHarian->setCellValue($cell, $valLama + $row->jumlah_berat);
+
+                // 2. HITUNG TOTAL MANUAL (TABUNGAN)
+                if (!isset($totalBulanIni[$row->id_lokasi][$row->id_jenis])) {
+                    $totalBulanIni[$row->id_lokasi][$row->id_jenis] = 0;
+                }
+                $totalBulanIni[$row->id_lokasi][$row->id_jenis] += $row->jumlah_berat;
+                
+                // Tabung juga buat Grand Total Tahunan
+                if (!isset($grandTotal[$row->id_lokasi][$row->id_jenis])) {
+                    $grandTotal[$row->id_lokasi][$row->id_jenis] = 0;
+                }
+                $grandTotal[$row->id_lokasi][$row->id_jenis] += $row->jumlah_berat;
+            }
+        }
+
+        // --- B. ISI SHEET REKAP AREA (Langsung setelah loop harian selesai) ---
+        // Kita punya $totalBulanIni yang isinya total berat per lokasi di bulan ini
+        // Kita tembak ke Sheet 'Rekap area' di baris yang sesuai ($rekapAreaRow)
+        
+        foreach ($totalBulanIni as $locId => $jenisList) {
+            foreach ($jenisList as $jenisId => $beratTotal) {
+                // Cari kolom di Sheet Rekap Area (Biasanya sama urutannya dengan sheet harian)
+                $kolomRekap = $this->getKolomExcel($locId, $jenisId); 
+                
+                // Tulis Total Bulan ini ke Sheet Rekap
+                $sheetRekapArea->setCellValue($kolomRekap . $rekapAreaRow, $beratTotal);
+            }
+        }
+        
+        $rekapAreaRow++; // Pindah ke baris bulan berikutnya (Agustus, dst)
+    }
+
+    // --- C. ISI SHEET REKAP NERACA (TAHUNAN) ---
+    $sheetNeraca = $spreadsheet->getSheetByName('Rekap Neraca Pengelolaan Sampah');
+    // Loop variabel $grandTotal yang sudah kita tabung selama 12 bulan
+    // Dan tulis ke sel yang sesuai (Misal Kolom C Baris 5 utk Kantor Organik)
+    
+    // ... (Logika write grand total) ...
+
+    // 3. EXPORT
+    // ... (Code save output) ...
+}
+
+// Fungsi Bantuan untuk menentukan kolom (HARDCODE Sesuai Template Anda)
+private function getKolomExcel($lokasiId, $jenisId) {
+    // Contoh Mapping manual
+    if ($lokasiId == 1) { // KANTOR
+        if ($jenisId == 1) return 'C'; // Organik
+        if ($jenisId == 2) return 'D'; // Anorganik
+        if ($jenisId == 3) return 'E'; // Residu
+    }
+    if ($lokasiId == 2) { // PARKIR
+        if ($jenisId == 1) return 'G'; 
+        if ($jenisId == 2) return 'H';
+        if ($jenisId == 3) return 'I';
+    }
+    return null;
+}
+Kesimpulan untuk Laporan Anda
+Dengan cara ini:
+
+Anda tidak perlu pusing rumus Excel error/hilang.
+
+Data di Sheet Rekap dijamin hasil penjumlahan dari data yang Anda tulis di Sheet Harian (karena dihitung oleh variabel PHP yang sama).
+
+Anda punya kontrol penuh.
+
+Apakah alur logika coding ini lebih bisa diterima? Jika ya, Anda bisa mulai dengan membuat fungsi getKolomExcel itu dengan melihat file Excel aslinya (Area Kantor Organik itu Kolom apa, dst).
+eh untuk datanya tidak jadi dihapus apapun deh, hanya hapus dibagian yang isi datanya yang harian saja mulai dari tgl berapa ke berapa(tgl tidak dihapus) Area asal dan jenis sampah tidak dihapus jadi isinya fure murni saja yang tidak berumus, saja
+
+yang ini yang seperti gambar gambar ke dua saja untuk isian harian berdasarkan kategori jenis dan lokasi asalnya, nah untuk jumlah dll, tidak ada dihapus sama sekali
+Keputusan yang sangat tepat! Ini adalah metode Hybrid (Campuran).
+
+Ini adalah cara kerja yang paling efisien dan aman:
+
+PHP (Laravel) tugasnya hanya "Menyuapi Data Mentah" ke sel-sel harian.
+
+Excel tugasnya "Mengunyah Data" (Menghitung Total, Rata-rata, dan Rekap ke sheet lain pakai Rumus).
+
+Berikut adalah panduan langkah demi langkah dan Kode Program Final untuk Anda.
+
+Langkah 1: Bersihkan File Excel (Template)
+Buka file Excel Anda, lalu lakukan hal berikut hanya pada Sheet Bulan (Juli - Juni):
+
+Blok Area Input Angka Saja:
+
+Biasanya mulai dari Tanggal 1 sampai Tanggal 31.
+
+Dan dari kolom Area Kantor sampai Area Lainnya.
+
+Tekan Delete: Kosongkan isinya agar bersih.
+
+JANGAN HAPUS:
+
+Kolom Tanggal (Angka 1, 2, 3 di kiri).
+
+Baris "Total" atau "Rata-rata" di bagian paling bawah (yang ada rumusnya).
+
+Sheet Rekap Area & Rekap Neraca: JANGAN DISENTUH SAMA SEKALI. Biarkan angka-angkanya di sana (biarpun jadi 0 atau error), karena itu adalah rumus otomatis.
+
+Simpan file ini sebagai: storage/app/public/templates/template_master.xlsx
+
+Langkah 2: Kode Program (Controller)
+Ini adalah kode lengkap untuk LaporanController.php. Kode ini mencakup:
+
+Logika menulis Nama Instansi di Header.
+
+Logika mengisi Data Harian.
+
+Logika Mapping Kolom (Menentukan sampah Kantor masuk kolom C, Parkir masuk kolom G, dst).
+
+PHP
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Models\SampahTerkelola; // Pastikan Model Sesuai
+use App\Models\SampahDiserahkan;
+use App\Models\User;
+use Carbon\Carbon;
+
+class LaporanController extends Controller
+{
+    public function exportFinal(Request $request)
+    {
+        // 1. AMBIL INPUT DARI FORM
+        $tahun = $request->input('tahun'); // Contoh: 2025
+        $instansiIds = $request->input('instansi_ids'); // Array [1, 2] dari checkbox
+        
+        // 2. LOAD TEMPLATE
+        $templatePath = storage_path('app/public/templates/template_master.xlsx');
+        if (!file_exists($templatePath)) {
+            return back()->with('error', 'File template tidak ditemukan!');
+        }
+        
+        $spreadsheet = IOFactory::load($templatePath);
+
+        // ==========================================
+        // BAGIAN A: TULIS JUDUL INSTANSI (HEADER)
+        // ==========================================
+        $namaInstansiList = User::whereIn('id_instansi', $instansiIds)
+                            ->join('instansis', 'users.id_instansi', '=', 'instansis.id') // Sesuaikan nama tabel instansi
+                            ->distinct()
+                            ->pluck('instansis.nama_instansi') // Sesuaikan nama kolom
+                            ->toArray();
+
+        $judulInstansi = "";
+        if (count($namaInstansiList) == 1) {
+            $judulInstansi = strtoupper($namaInstansiList[0]);
+        } elseif (count($namaInstansiList) > 1 && count($namaInstansiList) <= 3) {
+            $judulInstansi = strtoupper(implode(", ", $namaInstansiList));
+        } else {
+            $judulInstansi = "GABUNGAN BEBERAPA UNIT KERJA";
+        }
+
+        // Tembak Judul ke Sheet Rekap (Misal di Cell C3 - Sesuaikan dengan Excel Anda)
+        // Cek dulu sheetnya ada atau tidak
+        $sheetRekap = $spreadsheet->getSheetByName('Rekap Neraca Pengelolaan Sampah');
+        if($sheetRekap) {
+            $sheetRekap->setCellValue('C3', "Area: " . $judulInstansi);
+        }
+
+        // ==========================================
+        // BAGIAN B: ISI DATA HARIAN (LOOPING BULAN)
+        // ==========================================
+        
+        // Mapping: Angka Bulan => Nama Sheet
+        $months = [
+            7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni'
+        ];
+
+        // Posisi Baris Tanggal 1 (Cek Excel Anda, misal Tgl 1 ada di baris 10)
+        $startRow = 10; 
+
+        foreach ($months as $monthNum => $sheetName) {
+            $sheet = $spreadsheet->getSheetByName($sheetName);
+            
+            if (!$sheet) continue; // Skip jika sheet tidak ketemu
+
+            // Tentukan Tahun (Juli-Des = Tahun Pilihan, Jan-Juni = Tahun Berikutnya)
+            $currentYear = ($monthNum >= 7) ? $tahun : $tahun + 1;
+
+            // --- QUERY DATA SAMPAH TERKELOLA ---
+            $dataTerkelola = SampahTerkelola::whereYear('tanggal', $currentYear)
+                ->whereMonth('tanggal', $monthNum)
+                ->whereHas('user', function($q) use ($instansiIds) {
+                    $q->whereIn('id_instansi', $instansiIds);
+                })->get();
+
+            // --- PROSES DATA ---
+            foreach ($dataTerkelola as $row) {
+                // 1. Tentukan Baris (Row) berdasarkan Tanggal
+                $tgl = (int)Carbon::parse($row->tanggal)->format('d');
+                $barisExcel = $startRow + ($tgl - 1); 
+
+                // 2. Tentukan Kolom (Column) berdasarkan Lokasi & Jenis
+                // Fungsi ini ada di bawah (private function)
+                $kolomExcel = $this->getExcelColumn($row->id_lokasi, $row->id_jenis);
+
+                if ($kolomExcel) {
+                    // Ambil nilai lama (jika ada 2 input di hari yang sama)
+                    $valLama = $sheet->getCell($kolomExcel . $barisExcel)->getValue();
+                    // Jumlahkan
+                    $sheet->setCellValue($kolomExcel . $barisExcel, $valLama + $row->jumlah_berat);
+                }
+            }
+
+            // --- QUERY DATA SAMPAH DISERAHKAN (Jika strukturnya sama, lakukan hal serupa) ---
+            // ... (Copy paste logika di atas untuk SampahDiserahkan jika perlu) ...
+        }
+
+        // 3. DOWNLOAD FILE
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Laporan_Neraca_Sampah_' . $tahun . '.xlsx';
+        
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, $fileName);
+    }
+
+    // ==========================================
+    // FUNGSI PENTING: PETA LOKASI KOLOM EXCEL
+    // ==========================================
+    private function getExcelColumn($lokasiId, $jenisId)
+    {
+        // MAPPING MANUAL (SESUAIKAN DENGAN EXCEL ASLI ANDA)
+        // Contoh ini berdasarkan file CSV yang Anda kirim
+        
+        // LOKASI 1: AREA KANTOR
+        if ($lokasiId == 1) { 
+            if ($jenisId == 1) return 'C'; // Organik
+            if ($jenisId == 2) return 'D'; // Anorganik
+            if ($jenisId == 3) return 'E'; // Residu
+        }
+
+        // LOKASI 2: AREA PARKIR/TAMAN
+        // Biasanya selang 1 kolom untuk "Total" (Kolom F dilewati)
+        if ($lokasiId == 2) { 
+            if ($jenisId == 1) return 'G'; // Organik
+            if ($jenisId == 2) return 'H'; // Anorganik
+            if ($jenisId == 3) return 'I'; // Residu
+        }
+
+        // LOKASI 3: RUANG TUNGGU
+        if ($lokasiId == 3) { 
+            if ($jenisId == 1) return 'K'; 
+            if ($jenisId == 2) return 'L';
+            if ($jenisId == 3) return 'M';
+        }
+
+        // LOKASI 4: TEMPAT MAKAN (Kantin)
+        if ($lokasiId == 4) { 
+            if ($jenisId == 1) return 'O'; 
+            if ($jenisId == 2) return 'P';
+            if ($jenisId == 3) return 'Q';
+        }
+
+        // LOKASI 5: SAMPAH KAPAL
+        if ($lokasiId == 5) { 
+            if ($jenisId == 1) return 'S'; 
+            if ($jenisId == 2) return 'T';
+            if ($jenisId == 3) return 'U';
+        }
+
+        return null; // Jika tidak ketemu
+    }
+}
+Yang Harus Anda Lakukan Sekarang:
+Cek $startRow = 10: Buka Excel, lihat Tanggal 1 itu ada di baris nomor berapa di Excel (kiri paling pinggir). Jika baris 12, ganti angka 10 jadi 12 di kodingan.
+
+Cek Fungsi getExcelColumn: Ini yang paling krusial. Anda harus melihat Excel Anda huruf kolomnya apa saja:
+
+Kantor Organik = Kolom C?
+
+Kantor Anorganik = Kolom D?
+
+Parkir Organik = Kolom G? (Biasanya loncat karena ada kolom Total).
+
+Sesuaikan huruf-huruf di fungsi private di atas.
+
+Dengan cara ini, file Excel hasil download akan:
+
+Berisi data harian yang presisi.
+
+Sheet Rekap otomatis terisi angka total (karena rumus Excelnya bekerja otomatis membaca data harian yang baru saja kita input).
+
+nah andakan ada sudah saya kasih file excelnya, jadi buatkan logika coding bagaimana penempatan datanya ditaruh dimana dan dimulai dari mana, untuk selanjutnya akan saya arahkan visual code github untuk penyesuaian lainnya.
+Berdasarkan analisis file Excel (.csv) dan Database (pwaste.sql) yang Anda kirim, saya sudah memetakan koordinat sel secara pasti.
+
+Berikut adalah Logika Koding Lengkap yang siap Anda salin ke VS Code.
+
+1. Peta Koordinat Excel (Mapping Logic)
+Sebelum masuk koding, ini adalah logika penempatan kolom berdasarkan file Excel Anda:
+
+Baris Awal Data (Start Row): Baris 10 (Tanggal 1).
+
+Struktur Kolom:
+
+Area Kantor (ID 1): Organik (C), Anorganik (D), Residu (E).
+
+Area Parkir (ID 2): Organik (G), Anorganik (H), Residu (I).
+
+Ruang Tunggu (ID 3): Organik (K), Anorganik (L), Residu (M).
+
+Tempat Makan (ID 4): Organik (O), Anorganik (P), Residu (Q).
+
+Sampah Kapal (ID 5): Organik (S), Anorganik (T), Residu (U).
+
+Area Lain (ID 6): Organik (W), Anorganik (X), Residu (Y).
+
+2. Kode Controller (LaporanController.php)
+Salin seluruh kode ini ke dalam Controller Anda.
+
+PHP
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Models\SampahTerkelola;
+use App\Models\SampahDiserahkan;
+use App\Models\User;
+use Carbon\Carbon;
+
+class LaporanController extends Controller
+{
+    public function exportFinal(Request $request)
+    {
+        // 1. SETTING AWAL
+        $tahun = $request->input('tahun'); 
+        $instansiIds = $request->input('instansi_ids'); // Array dari checkbox
+        
+        // Load Template Master
+        $templatePath = storage_path('app/public/templates/template_master.xlsx');
+        if (!file_exists($templatePath)) {
+            return back()->with('error', 'File template master belum diupload!');
+        }
+        
+        // Load Excel
+        $spreadsheet = IOFactory::load($templatePath);
+
+        // ====================================================
+        // BAGIAN 1: ISI JUDUL INSTANSI (HEADER)
+        // ====================================================
+        
+        // Ambil nama instansi untuk dijadikan Judul
+        $namaInstansi = User::whereIn('id_instansi', $instansiIds)
+                        ->join('instansis', 'users.id_instansi', '=', 'instansis.id')
+                        ->distinct()
+                        ->pluck('instansis.nama_instansi')
+                        ->toArray();
+
+        // Logika Nama Judul
+        $judulText = "SELURUH WILAYAH OPERASIONAL";
+        if (count($namaInstansi) == 1) {
+            $judulText = strtoupper($namaInstansi[0]);
+        } elseif (count($namaInstansi) > 1 && count($namaInstansi) <= 3) {
+            $judulText = strtoupper(implode(", ", $namaInstansi));
+        }
+
+        // Tulis Judul ke Sheet Rekap (Cell C3 sesuai layout)
+        $sheetRekap = $spreadsheet->getSheetByName('Rekap Neraca Pengelolaan Sampah');
+        if($sheetRekap) {
+            $sheetRekap->setCellValue('C3', "Area : " . $judulText);
+        }
+
+        // ====================================================
+        // BAGIAN 2: LOOPING PENGISIAN DATA HARIAN
+        // ====================================================
+
+        // Mapping Angka Bulan ke Nama Sheet
+        $months = [
+            7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni'
+        ];
+
+        // Baris Excel Tanggal 1 dimulai (Berdasarkan File Anda)
+        $startRow = 10; 
+
+        foreach ($months as $monthNum => $sheetName) {
+            
+            // Cek apakah sheet ada
+            $sheet = $spreadsheet->getSheetByName($sheetName);
+            if (!$sheet) continue;
+
+            // Logika Tahun: Juli-Des = Tahun Input, Jan-Juni = Tahun Input + 1
+            $currentYear = ($monthNum >= 7) ? $tahun : $tahun + 1;
+
+            // --- QUERY DATABASE ---
+            // Mengambil data sampah TERKELOLA
+            $dataSampah = SampahTerkelola::whereYear('tanggal', $currentYear)
+                ->whereMonth('tanggal', $monthNum)
+                ->whereHas('user', function($q) use ($instansiIds) {
+                    $q->whereIn('id_instansi', $instansiIds);
+                })->get();
+
+            // Jika Anda juga ingin mengambil SAMPAH DISERAHKAN (Gabung query)
+            $dataDiserahkan = SampahDiserahkan::whereYear('tanggal', $currentYear)
+                ->whereMonth('tanggal', $monthNum)
+                ->whereHas('user', function($q) use ($instansiIds) {
+                    $q->whereIn('id_instansi', $instansiIds);
+                })->get();
+
+            // Gabung Collection (Opsional: tergantung apakah mau dipisah atau digabung)
+            $allData = $dataSampah->merge($dataDiserahkan);
+
+            // --- INJECT DATA KE CELL ---
+            foreach ($allData as $row) {
+                
+                // 1. Tentukan Baris (Row)
+                // Ambil tanggal hari ini (1-31)
+                $tgl = (int)Carbon::parse($row->tanggal)->format('d');
+                
+                // Rumus: Baris Awal + (Tanggal - 1)
+                // Contoh: Tgl 1 -> 10 + 0 = Baris 10
+                // Contoh: Tgl 5 -> 10 + 4 = Baris 14
+                $barisExcel = $startRow + ($tgl - 1); 
+
+                // 2. Tentukan Kolom (Column)
+                // Panggil fungsi Helper di bawah
+                $kolomExcel = $this->getExcelColumn($row->id_lokasi, $row->id_jenis);
+
+                if ($kolomExcel) {
+                    // Ambil nilai yang sudah ada (supaya bisa dijumlahkan jika ada double input)
+                    $nilaiLama = $sheet->getCell($kolomExcel . $barisExcel)->getValue();
+                    
+                    // Jumlahkan nilai lama + nilai baru
+                    $totalBaru = (float)$nilaiLama + (float)$row->jumlah_berat;
+                    
+                    // Tulis kembali ke Excel
+                    $sheet->setCellValue($kolomExcel . $barisExcel, $totalBaru);
+                }
+            }
+        }
+
+        // ====================================================
+        // BAGIAN 3: DOWNLOAD FILE
+        // ====================================================
+        
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Laporan_Neraca_Sampah_' . $tahun . '.xlsx';
+        
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, $fileName);
+    }
+
+    // ====================================================
+    // FUNGSI HELPER: PEMETAAN KOLOM
+    // ====================================================
+    // Fungsi ini menentukan ID Lokasi & ID Jenis masuk ke Kolom Huruf Apa
+    
+    private function getExcelColumn($lokasiId, $jenisId)
+    {
+        // ASUMSI ID JENIS SAMPAH DARI DATABASE:
+        // 1 = Organik
+        // 2 = Anorganik
+        // 3 = Residu / B3 / Lainnya
+
+        // LOKASI 1: AREA KANTOR
+        if ($lokasiId == 1) {
+            if ($jenisId == 1) return 'C'; // Organik
+            if ($jenisId == 2) return 'D'; // Anorganik
+            if ($jenisId == 3) return 'E'; // Residu
+        }
+
+        // LOKASI 2: AREA PARKIR / TAMAN
+        if ($lokasiId == 2) {
+            if ($jenisId == 1) return 'G'; // Organik
+            if ($jenisId == 2) return 'H'; // Anorganik
+            if ($jenisId == 3) return 'I'; // Residu
+        }
+
+        // LOKASI 3: RUANG TUNGGU
+        if ($lokasiId == 3) {
+            if ($jenisId == 1) return 'K'; // Organik
+            if ($jenisId == 2) return 'L'; // Anorganik
+            if ($jenisId == 3) return 'M'; // Residu
+        }
+
+        // LOKASI 4: TEMPAT MAKAN (KANTIN)
+        if ($lokasiId == 4) {
+            if ($jenisId == 1) return 'O'; // Organik
+            if ($jenisId == 2) return 'P'; // Anorganik
+            if ($jenisId == 3) return 'Q'; // Residu
+        }
+
+        // LOKASI 5: SAMPAH KAPAL
+        if ($lokasiId == 5) {
+            if ($jenisId == 1) return 'S'; // Organik
+            if ($jenisId == 2) return 'T'; // Anorganik
+            if ($jenisId == 3) return 'U'; // Residu
+        }
+
+        // LOKASI 6: AREA LAINNYA
+        if ($lokasiId == 6) {
+            if ($jenisId == 1) return 'W'; // Organik
+            if ($jenisId == 2) return 'X'; // Anorganik
+            if ($jenisId == 3) return 'Y'; // Residu
+        }
+
+        return null; // Jika ID tidak dikenali
+    }
+}
+3. Penjelasan Logika untuk Laporan Anda
+Database Query: Kita memanggil whereYear dan whereMonth sesuai loop bulan.
+
+Filter Instansi: Kita menggunakan whereHas('user') karena ID Instansi menempel pada User, bukan pada Sampah.
+
+Coordinate Injection: Kita tidak membuat baris baru. Kita hanya menunjuk alamat sel (misal C10) dan menimpa isinya.
+
+Auto-Calculation: Karena sheet Rekap di Excel Anda sudah berisi rumus (misal =SUM('Juli'!C10:C40)), maka saat kita mengisi data di sheet Juli lewat kodingan ini, sheet Rekap akan otomatis terupdate saat file dibuka. Tidak perlu koding untuk sheet rekap!
+nah sekarang apakah anda bisa membaca bagaimana alur logika perhitungan untuk file excel ini, rumus-rumusnya dan logika perhitungannya
+
+Berdasarkan file template_master.xlsx (format CSV) yang Anda unggah dan perbandingan dengan file yang terisi sebelumnya, saya sudah bisa membedah Alur Logika Perhitungan (Rumus Excel) yang bekerja di balik layar.
+
+Karena file yang Anda unggah adalah CSV (hanya nilai, bukan rumus), saya merekonstruksi logikanya berdasarkan struktur kolom dan barisnya.
+
+Ini adalah Peta Logika yang dijalankan oleh Excel secara otomatis setelah program Laravel Anda menyuntikkan data mentah.
+
+1. Logic Level 1: Sheet Harian (Juli - Juni)
+Ini adalah "Dapur" utama. Di sini data mentah masuk, dan Excel melakukan perhitungan dasar.
+
+Input Data (Oleh Coding Laravel):
+
+Mengisi sel baris 10 s.d. 40 (Tanggal 1-31).
+
+Kolom yang diisi: Berat Organik, Anorganik, Residu per Lokasi.
+
+Rumus Excel 1: Total Per Hari (Horizontal)
+
+Di setiap kelompok lokasi (misal Area Kantor), ada kolom "Total Timbulan Sampah".
+
+Logika: Organik + Anorganik + Residu (pada hari itu).
+
+Contoh (Area Kantor): F10 = C10 + D10 + E10
+
+Rumus Excel 2: Total Per Bulan (Vertikal)
+
+Terletak di bagian paling bawah (Baris "Total/jenis (kg/bulan)").
+
+Logika: SUM(Baris Tanggal 1 : Baris Tanggal 31).
+
+Contoh: =SUM(C10:C40)
+
+Rumus Excel 3: Konversi Kg ke Ton
+
+Terletak di baris bawahnya lagi ("Total/jenis (ton/bulan)").
+
+Logika: Nilai Kg / 1000.
+
+Contoh: =C42 / 1000
+
+2. Logic Level 2: Sheet Rekap area
+Sheet ini berfungsi mengumpulkan total bulanan dari setiap sheet bulan (Juli-Juni) agar bisa dilihat dalam satu tabel besar.
+
+Input Data: Tidak ada input manual. Semua otomatis Link Formula.
+
+Rumus Excel: Mengambil Data Sheet Lain
+
+Setiap sel di sini mengambil nilai dari Baris Total Konversi Ton di sheet harian.
+
+Contoh (Sel Juli - Kantor - Organik): ='Juli'!C43 (Mengambil sel total ton organik dari sheet Juli).
+
+Contoh (Sel Agustus - Kantor - Organik): ='Agustus'!C43
+
+3. Logic Level 3: Sheet Rekap Sampah terkelola
+Sheet ini menyederhanakan data. Tidak peduli lokasinya di mana, yang penting berapa total Organik, Anorganik, dan Residu seluruh pelabuhan per bulan.
+
+Rumus Excel: Penjumlahan Lintas Sheet
+
+Nilai di sini adalah penjumlahan dari Total Seluruh Area yang biasanya ada di ujung kanan sheet harian.
+
+Atau bisa juga menjumlahkan dari Sheet Rekap area.
+
+Logika: SUM(Total Organik Kantor + Total Organik Parkir + ... + Total Organik Area Lain).
+
+4. Logic Level 4: Sheet Rekap Neraca Pengelolaan Sampah (FINAL)
+Ini adalah "Laporan Eksekutif". Isinya adalah total setahun penuh per lokasi.
+
+Kolom "Jumlah Timbulan Sampah (ton/tahun)"
+
+Logika: Menjumlahkan total berat (semua jenis) dari bulan Juli s.d. Juni untuk lokasi tersebut.
+
+Rumus: =SUM('Rekap area'!Baris_Juli:Baris_Juni) (spesifik kolom total lokasi itu).
+
+Kolom "Jumlah Sampah Organik/Anorganik/Residu"
+
+Logika: Sama seperti di atas, tapi spesifik per jenis sampah.
+
+Kolom "Prosentase Sampah Terkelola/Residu" (%)
+
+Ini rumus analisa efisiensi.
+
+Logika: (Total Berat Jenis Tertentu / Total Timbulan Sampah) x 100.
+
+Contoh: Jika total sampah kantor 100 ton, dan organiknya 60 ton, maka rumusnya = (60 / 100) * 100 hasilnya 60%.
+
+Kesimpulan untuk Coding Anda
+Anda TIDAK PERLU memikirkan Rumus Level 2, 3, dan 4 di dalam kodingan Laravel Anda.
+
+Tugas kodingan Anda (LaporanController.php) hanyalah memastikan:
+
+Data masuk ke sel yang benar di Sheet Harian (Level 1).
+
+Tidak menimpa baris rumus yang ada di bawah (Baris Total).
+
+Selama Anda mengisi angka harian dengan benar (Kg), Excel akan otomatis:
+
+Menghitung Total Harian.
+
+Menghitung Total Bulanan.
+
+Mengonversi ke Ton.
+
+Melempar angkanya ke Sheet Rekap Area.
+
+Menghitung Neraca Tahunan & Persentase.
+
+Itulah kejeniusan metode Hybrid ini. Pekerjaan berat kalkulasi diserahkan ke Excel.
+
+
+jadi yang dimasukkan kedalam file apakah yang sampah dikelola atau sampah diserahkan?
+
+Jawabannya adalah: KEDUANYA (Dua-duanya Dimasukkan).
+
+Alasannya sederhana: File Excel tersebut berjudul "REKAMAN TIMBULAN SAMPAH". Dalam prinsip pengelolaan lingkungan (Neraca Limbah), "Timbulan Sampah" artinya adalah total seluruh sampah yang dihasilkan di lokasi tersebut, tidak peduli nasib akhirnya mau dikelola sendiri atau diserahkan ke orang lain.
+
+Logika Kasusnya: Misalkan di Area Kantor pada tanggal 1 Januari:
+
+Ada sisa makanan 5 kg (Diolah jadi kompos -> Masuk tabel sampah_terkelola).
+
+Ada botol plastik 3 kg (Dijual ke Bank Sampah -> Masuk tabel sampah_diserahkan).
+
+Maka, di dalam Excel sheet Januari baris tanggal 1, kolom Area Kantor, totalnya harus tertulis 8 kg. Jika Anda hanya memasukkan salah satu, laporannya jadi salah (under-report).
+
+Bagaimana Cara Menggabungkannya di Coding?
+Di kode LaporanController.php yang saya berikan sebelumnya, saya sudah menyiapkan logika penggabungannya (Merge).
+
+Pastikan bagian ini ada di kode Anda:
+
+PHP
+// 1. Ambil Data Sampah TERKELOLA
+$dataTerkelola = SampahTerkelola::whereYear('tanggal', $currentYear)
+    ->whereMonth('tanggal', $monthNum)
+    ->whereHas('user', function($q) use ($instansiIds) {
+        $q->whereIn('id_instansi', $instansiIds);
+    })->get();
+
+// 2. Ambil Data Sampah DISERAHKAN
+$dataDiserahkan = SampahDiserahkan::whereYear('tanggal', $currentYear)
+    ->whereMonth('tanggal', $monthNum)
+    ->whereHas('user', function($q) use ($instansiIds) {
+        $q->whereIn('id_instansi', $instansiIds);
+    })->get();
+
+// 3. GABUNGKAN KEDUANYA (MERGE)
+// Ini kuncinya! Kita jadikan satu koleksi data agar diloop bersamaan.
+$allData = $dataTerkelola->merge($dataDiserahkan);
+
+// 4. Loop Data Gabungan untuk dimasukkan ke Excel
+foreach ($allData as $row) {
+    // ... logika penentuan baris dan kolom ...
+    // ... tulis ke excel ...
+}
+Kesimpulan: Jangan pilih salah satu. Ambil data dari kedua tabel database tersebut, gabungkan, lalu masukkan ke Excel sesuai tanggal dan lokasinya. Excel hanya peduli "Berapa berat sampah yang muncul", dia tidak bertanya itu sampah yang dikelola atau diserahkan.
+oh ya gini setelah saya cek file excelnya untuk sampah terkelola itu yang kategori jenisnya Organik dan Anorganik masuk ke bagian Sampah Organik Terpilah dan Sampah Anorganik Terpilah, karena ngak mungkin kategori residu masuk ke Terkelola pasti diserahkan. nah untuk keseluruhan isi record sampah diserahkan itu masuk kebagian kolom Sampah Lainnya dan/atau Residu kesemuanya baik kategorinya apapun untuk sampah diserahkan, nah untuk sampah Terkelola dengan kategori jenis Residu Masukkan ke bagian Sampah Anorganik Terpilah. gitu logika pengisiannya.
+
+Tentu, saya mengerti. Logika baru ini jauh lebih masuk akal secara operasional di lapangan.
+
+Jadi ringkasan aturan mainnya (Business Logic) adalah:
+
+SUMBER DATA: SAMPAH TERKELOLA (sampah_terkelolas)
+
+Jika Jenis Organik -> Masuk Kolom Sampah Organik Terpilah.
+
+Jika Jenis Anorganik -> Masuk Kolom Sampah Anorganik Terpilah.
+
+Jika Jenis Residu -> Masuk Kolom Sampah Anorganik Terpilah (Karena dianggap salah input kategori tapi statusnya terkelola).
+
+SUMBER DATA: SAMPAH DISERAHKAN (sampah_diserahkans)
+
+APAPUN JENISNYA (Organik/Anorganik/Residu) -> Semuanya masuk ke Kolom Sampah Lainnya dan/atau Residu.
+
+Perubahan Kode Program
+Kita harus mengubah fungsi getExcelColumn agar menerima parameter tambahan yaitu sumber data (apakah dari tabel terkelola atau diserahkan).
+
+Silakan ganti seluruh isi LaporanController.php dengan revisi di bawah ini. Kode ini sudah memisahkan looping antara sampah terkelola dan diserahkan agar logikanya tidak tertukar.
+
+PHP
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Models\SampahTerkelola;
+use App\Models\SampahDiserahkan;
+use App\Models\User;
+use Carbon\Carbon;
+
+class LaporanController extends Controller
+{
+    public function exportFinal(Request $request)
+    {
+        // 1. SETTING AWAL
+        $tahun = $request->input('tahun'); 
+        $instansiIds = $request->input('instansi_ids'); 
+        
+        $templatePath = storage_path('app/public/templates/template_master.xlsx');
+        if (!file_exists($templatePath)) {
+            return back()->with('error', 'File template master belum diupload!');
+        }
+        
+        $spreadsheet = IOFactory::load($templatePath);
+
+        // ====================================================
+        // BAGIAN 1: ISI JUDUL INSTANSI (HEADER)
+        // ====================================================
+        $namaInstansi = User::whereIn('id_instansi', $instansiIds)
+                        ->join('instansis', 'users.id_instansi', '=', 'instansis.id')
+                        ->distinct()
+                        ->pluck('instansis.nama_instansi')
+                        ->toArray();
+
+        $judulText = "SELURUH WILAYAH OPERASIONAL";
+        if (count($namaInstansi) == 1) {
+            $judulText = strtoupper($namaInstansi[0]);
+        } elseif (count($namaInstansi) > 1 && count($namaInstansi) <= 3) {
+            $judulText = strtoupper(implode(", ", $namaInstansi));
+        }
+
+        $sheetRekap = $spreadsheet->getSheetByName('Rekap Neraca Pengelolaan Sampah');
+        if($sheetRekap) {
+            $sheetRekap->setCellValue('C3', "Area : " . $judulText);
+        }
+
+        // ====================================================
+        // BAGIAN 2: LOOPING PENGISIAN DATA HARIAN
+        // ====================================================
+        $months = [
+            7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni'
+        ];
+
+        $startRow = 10; // Baris Tanggal 1
+
+        foreach ($months as $monthNum => $sheetName) {
+            
+            $sheet = $spreadsheet->getSheetByName($sheetName);
+            if (!$sheet) continue;
+
+            $currentYear = ($monthNum >= 7) ? $tahun : $tahun + 1;
+
+            // ---------------------------------------------------------
+            // A. PROSES SAMPAH TERKELOLA (Organik -> Org, Anorganik/Residu -> Anorg)
+            // ---------------------------------------------------------
+            $dataTerkelola = SampahTerkelola::whereYear('tanggal', $currentYear)
+                ->whereMonth('tanggal', $monthNum)
+                ->whereHas('user', function($q) use ($instansiIds) {
+                    $q->whereIn('id_instansi', $instansiIds);
+                })->get();
+
+            foreach ($dataTerkelola as $row) {
+                $tgl = (int)Carbon::parse($row->tanggal)->format('d');
+                $barisExcel = $startRow + ($tgl - 1); 
+                
+                // Panggil Helper dengan status 'TERKELOLA'
+                $kolomExcel = $this->getExcelColumn($row->id_lokasi, $row->id_jenis, 'terkelola');
+
+                if ($kolomExcel) {
+                    $nilaiLama = $sheet->getCell($kolomExcel . $barisExcel)->getValue();
+                    $sheet->setCellValue($kolomExcel . $barisExcel, $nilaiLama + $row->jumlah_berat);
+                }
+            }
+
+            // ---------------------------------------------------------
+            // B. PROSES SAMPAH DISERAHKAN (SEMUA -> Sampah Lainnya/Residu)
+            // ---------------------------------------------------------
+            $dataDiserahkan = SampahDiserahkan::whereYear('tanggal', $currentYear)
+                ->whereMonth('tanggal', $monthNum)
+                ->whereHas('user', function($q) use ($instansiIds) {
+                    $q->whereIn('id_instansi', $instansiIds);
+                })->get();
+
+            foreach ($dataDiserahkan as $row) {
+                $tgl = (int)Carbon::parse($row->tanggal)->format('d');
+                $barisExcel = $startRow + ($tgl - 1); 
+
+                // Panggil Helper dengan status 'DISERAHKAN'
+                $kolomExcel = $this->getExcelColumn($row->id_lokasi, $row->id_jenis, 'diserahkan');
+
+                if ($kolomExcel) {
+                    $nilaiLama = $sheet->getCell($kolomExcel . $barisExcel)->getValue();
+                    $sheet->setCellValue($kolomExcel . $barisExcel, $nilaiLama + $row->jumlah_berat);
+                }
+            }
+        }
+
+        // DOWNLOAD FILE
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Laporan_Neraca_Sampah_' . $tahun . '.xlsx';
+        
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, $fileName);
+    }
+
+    // ====================================================
+    // FUNGSI HELPER BARU (DENGAN LOGIKA SUMBER DATA)
+    // ====================================================
+    private function getExcelColumn($lokasiId, $jenisId, $sumberData)
+    {
+        // LOGIKA KHUSUS: 
+        // 1. Jika DISERAHKAN -> Semuanya masuk kolom ke-3 (Residu/Lainnya)
+        // 2. Jika TERKELOLA:
+        //    - Organik (1) -> Kolom 1
+        //    - Anorganik (2) -> Kolom 2
+        //    - Residu (3) -> Kolom 2 (Masuk ke Anorganik sesuai request)
+
+        $targetKolom = 0; // 1=Organik, 2=Anorganik, 3=Residu/Lainnya
+
+        if ($sumberData == 'diserahkan') {
+            $targetKolom = 3; // Semua masuk kolom Residu
+        } else {
+            // Status Terkelola
+            if ($jenisId == 1) $targetKolom = 1; // Organik
+            if ($jenisId == 2) $targetKolom = 2; // Anorganik
+            if ($jenisId == 3) $targetKolom = 2; // Residu masuk Anorganik
+        }
+
+        // MAPPING KOLOM BERDASARKAN LOKASI
+        if ($lokasiId == 1) { // KANTOR
+            if ($targetKolom == 1) return 'C';
+            if ($targetKolom == 2) return 'D';
+            if ($targetKolom == 3) return 'E';
+        }
+        if ($lokasiId == 2) { // PARKIR
+            if ($targetKolom == 1) return 'G';
+            if ($targetKolom == 2) return 'H';
+            if ($targetKolom == 3) return 'I';
+        }
+        if ($lokasiId == 3) { // RUANG TUNGGU
+            if ($targetKolom == 1) return 'K';
+            if ($targetKolom == 2) return 'L';
+            if ($targetKolom == 3) return 'M';
+        }
+        if ($lokasiId == 4) { // TEMPAT MAKAN
+            if ($targetKolom == 1) return 'O';
+            if ($targetKolom == 2) return 'P';
+            if ($targetKolom == 3) return 'Q';
+        }
+        if ($lokasiId == 5) { // KAPAL
+            if ($targetKolom == 1) return 'S';
+            if ($targetKolom == 2) return 'T';
+            if ($targetKolom == 3) return 'U';
+        }
+        if ($lokasiId == 6) { // AREA LAIN
+            if ($targetKolom == 1) return 'W';
+            if ($targetKolom == 2) return 'X';
+            if ($targetKolom == 3) return 'Y';
+        }
+
+        return null;
+    }
+}
+Poin Penting Perubahan:
+Dua Kali Looping: Saya memisahkan foreach ($dataTerkelola) dan foreach ($dataDiserahkan). Ini memastikan kita bisa menerapkan aturan yang berbeda untuk masing-masing tabel.
+
+Helper Logic: Di fungsi getExcelColumn, saya menambahkan logika if ($sumberData == 'diserahkan') { $targetKolom = 3; }. Ini menjamin semua sampah diserahkan (mau itu organik atau anorganik) akan "dipaksa" masuk kolom Residu/Lainnya (Kolom E, I, M, dst).
+
+Terkelola Residu: Logika if ($jenisId == 3) $targetKolom = 2; memastikan jika ada yang salah input "Terkelola - Residu", dia akan dialihkan ke kolom Anorganik (Kolom D, H, L, dst).
+
+Silakan salin kode ini. Seharusnya output di Excel sekarang sudah 100% sesuai dengan aturan yang Anda jelaskan barusan.
